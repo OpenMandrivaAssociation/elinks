@@ -1,6 +1,6 @@
 %define rel       1
 %define pre     %nil
-%define version 0.11.2
+%define version 0.11.3
 %define release %mkrel %{rel}
 
 Summary:	Lynx-like text WWW browser
@@ -73,5 +73,3 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/html
 %{_bindir}/*
 %{_mandir}/man?/*
-
-
