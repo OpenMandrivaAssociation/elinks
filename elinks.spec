@@ -22,6 +22,7 @@ BuildRequires:	bzip2-devel
 BuildRequires:	idn-devel
 BuildRequires:	X11-devel
 Provides:	webclient links
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 ELinks is an advanced and well-established feature-rich text mode web
