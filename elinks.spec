@@ -1,4 +1,4 @@
-%define rel       1
+%define rel       2
 %define pre     %{nil}
 %define version 0.11.4
 %define release %mkrel %{rel}
@@ -13,7 +13,7 @@ Epoch:		0
 
 URL:		http://elinks.or.cz/
 Source0:	http://elinks.or.cz/download/%{name}-%{version}%{pre}.tar.bz2
-
+Patch0:		elinks-libjs_includes_fix.diff
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 BuildRequires:	samba-client
@@ -21,6 +21,7 @@ BuildRequires:	lua-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	idn-devel
 BuildRequires:	X11-devel
+BuildRequires:	js-devel
 Provides:	webclient links
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -37,9 +38,11 @@ customizable and can be extended via scripts. Its features include:
 
 %prep
 %setup -q -n %{name}-%{version}%{pre}
+%patch0 -p0
 gzip -9 ChangeLog
 
 %build
+autoreconf -fis
 %configure \
         --enable-256-colors \
         --enable-bittorrent
