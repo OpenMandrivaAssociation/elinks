@@ -1,4 +1,4 @@
-%define rel       2
+%define rel       3
 %define pre     %{nil}
 %define version 0.11.7
 %define release %mkrel %{rel}
