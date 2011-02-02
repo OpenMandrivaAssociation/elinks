@@ -1,4 +1,4 @@
-%define rel       3
+%define rel       4
 %define pre     %{nil}
 %define version 0.11.7
 %define release %mkrel %{rel}
@@ -10,18 +10,17 @@ Release:        %{release}
 License:	GPLv2
 Group:		Networking/WWW
 Epoch:		0
-
 URL:		http://elinks.or.cz/
 Source0:	http://elinks.or.cz/download/%{name}-%{version}%{pre}.tar.bz2
 Patch0:		elinks-libjs_includes_fix.diff
-BuildRequires:	ncurses-devel
+BuildRequires:	libx11-devel
 BuildRequires:	openssl-devel
-BuildRequires:	samba-client
-BuildRequires:	lua-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	idn-devel
-BuildRequires:	X11-devel
 BuildRequires:	js-devel
+BuildRequires:	gpm-devel
+BuildRequires:	zlib-devel
+BuildRequires:	expat-devel
 Provides:	webclient links
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -39,11 +38,10 @@ customizable and can be extended via scripts. Its features include:
 %prep
 %setup -q -n %{name}-%{version}%{pre}
 %patch0 -p0
-gzip -9 ChangeLog
 
 %build
-autoreconf -fis
-%configure \
+autoreconf -fi
+%configure2_5x \
         --enable-256-colors \
         --enable-bittorrent
 
@@ -71,7 +69,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-%doc AUTHORS BUGS COPYING ChangeLog.gz README SITES THANKS TODO 
+%doc AUTHORS BUGS COPYING ChangeLog README SITES THANKS TODO 
 %doc doc/*.txt
 %doc doc/html
 %{_bindir}/*
