@@ -1,12 +1,9 @@
-%define rel       4
 %define pre     %{nil}
-%define version 0.11.7
-%define release %mkrel %{rel}
 
 Summary:	Lynx-like text WWW browser
 Name:		elinks
-Version:	%{version}
-Release:        %{release}
+Version:	0.11.7
+Release:        %mkrel 2
 License:	GPLv2
 Group:		Networking/WWW
 Epoch:		0
