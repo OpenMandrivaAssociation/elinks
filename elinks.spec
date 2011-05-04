@@ -3,7 +3,7 @@
 Summary:	Lynx-like text WWW browser
 Name:		elinks
 Version:	0.11.7
-Release:        %mkrel 2
+Release:        3
 License:	GPLv2
 Group:		Networking/WWW
 Epoch:		0
@@ -16,7 +16,6 @@ BuildRequires:	bzip2-devel
 BuildRequires:	idn-devel
 BuildRequires:	js-devel
 BuildRequires:	gpm-devel
-BuildRequires:	zlib-devel
 BuildRequires:	expat-devel
 Provides:	webclient links
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
@@ -40,7 +39,11 @@ customizable and can be extended via scripts. Its features include:
 autoreconf -fi
 %configure2_5x \
         --enable-256-colors \
-        --enable-bittorrent
+        --enable-bittorrent \
+        --without-zlib
+# as for 0.11.7, zlib encoding support is broken, seems related to 
+# http://bugzilla.elinks.cz/show_bug.cgi?id=1034 but the patch doesn't
+# apply anymore
 
 %make
  
