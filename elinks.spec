@@ -3,7 +3,7 @@
 Summary:	Lynx-like text WWW browser
 Name:		elinks
 Version:	0.11.7
-Release:        3
+Release:        5
 License:	GPLv2
 Group:		Networking/WWW
 Epoch:		0
