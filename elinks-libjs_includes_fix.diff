@@ -1,0 +1,26 @@
+--- configure.in	2008-06-20 22:19:53.000000000 +0200
++++ configure.in.oden	2008-06-24 16:00:15.000000000 +0200
+@@ -508,14 +508,13 @@
+ 		withval="";
+ 	fi
+ 	for spidermonkeydir in "$withval" "" /usr /usr/local /opt/spidermonkey /opt/js; do
+-		for spidermonkeyinclude in "/include" "/include/js" "/include/smjs" "/include/mozjs"; do
+ 			for spidermonkeylib in js smjs mozjs; do
+ 				if test "$cf_result" = no; then
+ 					SPIDERMONKEY_LIBS="-l$spidermonkeylib"
+ 
+ 					if test ! -z "$spidermonkeydir"; then
+ 						SPIDERMONKEY_LIBS="-L$spidermonkeydir/lib $SPIDERMONKEY_LIBS"
+-						SPIDERMONKEY_CFLAGS="-I$spidermonkeydir$spidermonkeyinclude"
++						SPIDERMONKEY_CFLAGS="`pkg-config --cflags libjs`"
+ 					fi
+ 
+ 					LIBS="$SPIDERMONKEY_LIBS $LIBS_X"
+@@ -528,7 +527,6 @@
+ 						     cf_result=yes, cf_result=no)
+ 				fi
+ 			done
+-		done
+ 	done
+ fi
+ 
