@@ -3,7 +3,7 @@
 Summary:	Lynx-like text WWW browser
 Name:		elinks
 Version:	0.11.7
-Release:        5
+Release:        6
 License:	GPLv2
 Group:		Networking/WWW
 Epoch:		0
@@ -18,7 +18,6 @@ BuildRequires:	js-devel
 BuildRequires:	gpm-devel
 BuildRequires:	expat-devel
 Provides:	webclient links
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 ELinks is an advanced and well-established feature-rich text mode web
