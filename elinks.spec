@@ -10,7 +10,7 @@ Epoch:		0
 URL:		http://elinks.or.cz/
 Source0:	http://elinks.or.cz/download/%{name}-%{version}%{pre}.tar.bz2
 Patch0:		elinks-libjs_includes_fix.diff
-BuildRequires:	libx11-devel
+BuildRequires:	pkgconfig(x11)
 BuildRequires:	openssl-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	idn-devel
