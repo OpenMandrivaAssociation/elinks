@@ -12,6 +12,7 @@ Source1:	elinks.conf
 # stella6.4/centos patches thx to Nux
 Patch0:		elinks-0.11.0-ssl-noegd.patch
 Patch1:		elinks-0.10.1-utf_8_io-default.patch
+Patch2:		http://data.gpo.zugaina.org/gentoo/www-client/elinks/files/elinks-0.11.5-makefile.patch
 Patch3:		elinks-0.11.0-getaddrinfo.patch
 Patch4:		elinks-0.11.0-sysname.patch
 Patch5:		elinks-0.10.1-xterm.patch
@@ -85,6 +86,7 @@ exit 0
 %setup -q -n %{name}-%{version}%{pre}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -96,6 +98,7 @@ exit 0
 %patch12 -p1
 %patch13 -p1
 
+find . -name "Makefile*" -o -name "*.m4" |xargs sed -i -e 's,configure.in,configure.ac,g'
 sed -i 's/^# *serial [AM0-9]*$//' acinclude.m4 config/m4/*.m4
 aclocal -I config/m4
 autoreconf
