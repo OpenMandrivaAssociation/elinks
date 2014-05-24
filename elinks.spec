@@ -3,12 +3,13 @@
 Summary:	Lynx-like text WWW browser
 Name:		elinks
 Version:	0.12
-Release:	0.%{pre}.1
+Release:	0.%{pre}.2
 License:	GPLv2+
 Group:		Networking/WWW
 Url:		http://elinks.or.cz/
 Source0:	http://elinks.or.cz/download/%{name}-%{version}%{pre}.tar.bz2
 Source1:	elinks.conf
+
 # stella6.4/centos patches thx to Nux
 Patch0:		elinks-0.11.0-ssl-noegd.patch
 Patch1:		elinks-0.10.1-utf_8_io-default.patch
@@ -18,21 +19,25 @@ Patch4:		elinks-0.11.0-sysname.patch
 Patch5:		elinks-0.10.1-xterm.patch
 Patch7:		elinks-0.11.3-macropen.patch
 Patch8:		elinks-scroll.patch
-# nss_compat_ossl not yet ported on rosa
 #Patch9:	elinks-nss.patch
 #Patch10:	elinks-nss-inc.patch
 Patch11:	elinks-0.12pre5-js185.patch
 Patch12:	elinks-0.12pre5-ddg-search.patch
 Patch13:	elinks-0.12pre6-autoconf.patch
+#Patch14:	elinks-0.12pre6-ssl-hostname.patch
+Patch15:	elinks-0.12pre6-list_is_singleton.patch
+Patch16:	elinks-0.12pre6-lua51.patch
 
 BuildRequires:	bzip2-devel
 BuildRequires:	gpm-devel
 BuildRequires:	krb5-devel
+BuildRequires:	lua-devel
 BuildRequires:	pkgconfig(expat)
 BuildRequires:	pkgconfig(libidn)
 BuildRequires:	pkgconfig(mozjs185)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(zlib)
 Provides:	webclient
 Provides:	links
 
@@ -84,19 +89,7 @@ exit 0
 
 %prep
 %setup -q -n %{name}-%{version}%{pre}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch7 -p1
-%patch8 -p1
-#patch9 -p1
-#patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
+%apply_patches
 
 find . -name "Makefile*" -o -name "*.m4" |xargs sed -i -e 's,configure.in,configure.ac,g'
 sed -i 's/^# *serial [AM0-9]*$//' acinclude.m4 config/m4/*.m4
