@@ -103,9 +103,9 @@ export CFLAGS="%{optflags} $(getconf LFS_CFLAGS) -D_GNU_SOURCE"
 	--without-x \
 	--with-gssapi \
 	--enable-bittorrent \
-	--with-nss_compat_ossl \
+	--without-nss_compat_ossl \
 	--enable-256-colors \
-	--without-openssl \
+	--with-openssl \
 	--without-gnutls
 
 MOPTS="V=1"
