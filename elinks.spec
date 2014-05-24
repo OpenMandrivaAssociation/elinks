@@ -106,7 +106,8 @@ export CFLAGS="%{optflags} $(getconf LFS_CFLAGS) -D_GNU_SOURCE"
 	--without-nss_compat_ossl \
 	--enable-256-colors \
 	--with-openssl \
-	--without-gnutls
+	--without-gnutls \
+	--with-lua
 
 MOPTS="V=1"
 if tty >/dev/null 2>&1; then
