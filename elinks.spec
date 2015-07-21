@@ -3,7 +3,7 @@
 Summary:	Lynx-like text WWW browser
 Name:		elinks
 Version:	0.12
-Release:	0.%{pre}.3
+Release:	0.%{pre}.4
 License:	GPLv2+
 Group:		Networking/WWW
 Url:		http://elinks.or.cz/
@@ -98,7 +98,7 @@ autoreconf
 
 %build
 export CFLAGS="%{optflags} $(getconf LFS_CFLAGS) -D_GNU_SOURCE"
-%configure2_5x \
+%configure \
 	%{?rescue:--without-gpm} \
 	--without-x \
 	--with-gssapi \
