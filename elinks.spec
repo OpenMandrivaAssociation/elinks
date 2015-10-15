@@ -1,9 +1,10 @@
 %define pre pre6
+%define _disable_lto 1
 
 Summary:	Lynx-like text WWW browser
 Name:		elinks
 Version:	0.12
-Release:	0.%{pre}.4
+Release:	0.%{pre}.5
 License:	GPLv2+
 Group:		Networking/WWW
 Url:		http://elinks.or.cz/
