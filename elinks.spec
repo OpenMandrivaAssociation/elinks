@@ -4,7 +4,7 @@
 Summary:	Lynx-like text WWW browser
 Name:		elinks
 Version:	0.12
-Release:	0.%{pre}.5
+Release:	0.%{pre}.6
 License:	GPLv2+
 Group:		Networking/WWW
 Url:		http://elinks.or.cz/
@@ -28,6 +28,15 @@ Patch13:	elinks-0.12pre6-autoconf.patch
 #Patch14:	elinks-0.12pre6-ssl-hostname.patch
 Patch15:	elinks-0.12pre6-list_is_singleton.patch
 Patch16:	elinks-0.12pre6-lua51.patch
+# add support for GNU Libidn2, patch by Robert Scheck (#1098789)
+Patch17:	elinks-0.12pre6-libidn2.patch
+
+# make configure.ac recognize recent versions of GCC
+Patch18:	elinks-0.12pre6-recent-gcc-versions.patch
+
+# fix compatibility with OpenSSL 1.1 (#1423519) and ...
+# drop disablement of TLS1.0 on second attempt to connect
+Patch19:	elinks-0.12pre6-openssl11.patch
 
 BuildRequires:	bzip2-devel
 BuildRequires:	gpm-devel
@@ -41,6 +50,7 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
 Provides:	webclient
 Provides:	links
+Requires(post,preun,postun):	rpm-helper
 
 %description
 ELinks is an advanced and well-established feature-rich text mode web
@@ -64,10 +74,10 @@ customizable and can be extended via scripts. Its features include:
 
 %postun
 if [ "$1" -ge "1" ]; then
-	links=`readlink %{_sysconfdir}/alternatives/links`
-	if [ "$links" == "%{_bindir}/elinks" ]; then
-		%{_sbindir}/alternatives --set links %{_bindir}/elinks
-	fi
+    links=`readlink %{_sysconfdir}/alternatives/links`
+    if [ "$links" == "%{_bindir}/elinks" ]; then
+	%{_sbindir}/alternatives --set links %{_bindir}/elinks
+    fi
 fi
 exit 0
 
