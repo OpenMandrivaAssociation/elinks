@@ -98,10 +98,18 @@ exit 0
 %setup -q -n %{name}-%{version}%{pre}
 %apply_patches
 
-find . -name "Makefile*" -o -name "*.m4" |xargs sed -i -e 's,configure.in,configure.ac,g'
+# rename the input file of autoconf to eliminate a warning
+mv -v configure.in configure.ac
+sed -e 's/configure\.in/configure.ac/' \
+    -i Makefile* acinclude.m4 doc/man/man1/Makefile
+
+# remove bogus serial numbers
 sed -i 's/^# *serial [AM0-9]*$//' acinclude.m4 config/m4/*.m4
+
+# recreate autotools files
 aclocal -I config/m4
-autoreconf
+autoconf
+autoheader
 
 %build
 export CFLAGS="%{optflags} $(getconf LFS_CFLAGS) -D_GNU_SOURCE"
