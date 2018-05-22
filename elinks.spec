@@ -20,12 +20,9 @@ Patch4:		elinks-0.11.0-sysname.patch
 Patch5:		elinks-0.10.1-xterm.patch
 Patch7:		elinks-0.11.3-macropen.patch
 Patch8:		elinks-scroll.patch
-#Patch9:	elinks-nss.patch
-#Patch10:	elinks-nss-inc.patch
-Patch11:	elinks-0.12pre5-js185.patch
 Patch12:	elinks-0.12pre5-ddg-search.patch
 Patch13:	elinks-0.12pre6-autoconf.patch
-#Patch14:	elinks-0.12pre6-ssl-hostname.patch
+Patch14:	elinks-0.12pre6-ssl-hostname.patch
 Patch15:	elinks-0.12pre6-list_is_singleton.patch
 Patch16:	elinks-0.12pre6-lua51.patch
 # add support for GNU Libidn2, patch by Robert Scheck (#1098789)
@@ -38,13 +35,12 @@ Patch18:	elinks-0.12pre6-recent-gcc-versions.patch
 # drop disablement of TLS1.0 on second attempt to connect
 Patch19:	elinks-0.12pre6-openssl11.patch
 
-BuildRequires:	bzip2-devel
+BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	gpm-devel
 BuildRequires:	krb5-devel
 BuildRequires:	lua-devel
 BuildRequires:	pkgconfig(expat)
-BuildRequires:	pkgconfig(libidn)
-BuildRequires:	pkgconfig(mozjs185)
+BuildRequires:	pkgconfig(libidn2)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
@@ -101,6 +97,7 @@ exit 0
 %prep
 %setup -q -n %{name}-%{version}%{pre}
 %apply_patches
+exit 1
 
 find . -name "Makefile*" -o -name "*.m4" |xargs sed -i -e 's,configure.in,configure.ac,g'
 sed -i 's/^# *serial [AM0-9]*$//' acinclude.m4 config/m4/*.m4
@@ -136,4 +133,3 @@ touch %{buildroot}%{_bindir}/links
 true | gzip -c > %{buildroot}%{_mandir}/man1/links.1.gz
 
 %find_lang elinks
-
