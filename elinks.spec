@@ -97,7 +97,6 @@ exit 0
 %prep
 %setup -q -n %{name}-%{version}%{pre}
 %apply_patches
-exit 1
 
 find . -name "Makefile*" -o -name "*.m4" |xargs sed -i -e 's,configure.in,configure.ac,g'
 sed -i 's/^# *serial [AM0-9]*$//' acinclude.m4 config/m4/*.m4
