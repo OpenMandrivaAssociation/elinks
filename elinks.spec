@@ -4,7 +4,7 @@
 Summary:	Lynx-like text WWW browser
 Name:		elinks
 Version:	0.12
-Release:	0.%{pre}.7
+Release:	0.%{pre}.8
 License:	GPLv2+
 Group:		Networking/WWW
 Url:		http://elinks.or.cz/
@@ -34,6 +34,9 @@ Patch18:	elinks-0.12pre6-recent-gcc-versions.patch
 # fix compatibility with OpenSSL 1.1 (#1423519) and ...
 # drop disablement of TLS1.0 on second attempt to connect
 Patch19:	elinks-0.12pre6-openssl11.patch
+
+# fix programming mistakes detected by static analysis
+Patch20:	elinks-0.12pre6-static-analysis.patch
 
 BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	gpm-devel
@@ -95,8 +98,7 @@ exit 0
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q -n %{name}-%{version}%{pre}
-%apply_patches
+%autosetup -n %{name}-%{version}%{pre} -p1
 
 # rename the input file of autoconf to eliminate a warning
 mv -v configure.in configure.ac
@@ -129,10 +131,10 @@ if tty >/dev/null 2>&1; then
     # turn on fancy colorized output only when we have a TTY device
     MOPTS=
 fi
-%make $MOPTS
+%make_build $MOPTS
 
 %install
-%makeinstall_std
+%make_install
 rm -f %{buildroot}%{_datadir}/locale/locale.alias
 mkdir -p %{buildroot}%{_sysconfdir}
 install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/elinks.conf
