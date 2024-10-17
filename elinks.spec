@@ -7,7 +7,7 @@ Version:	0.12
 Release:	0.%{pre}.9
 License:	GPLv2+
 Group:		Networking/WWW
-Url:		http://elinks.or.cz/
+Url:		https://elinks.or.cz/
 Source0:	http://elinks.or.cz/download/%{name}-%{version}%{pre}.tar.bz2
 Source1:	elinks.conf
 
