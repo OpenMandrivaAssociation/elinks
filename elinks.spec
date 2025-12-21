@@ -38,6 +38,11 @@ Patch19:	elinks-0.12pre6-openssl11.patch
 # fix programming mistakes detected by static analysis
 Patch20:	elinks-0.12pre6-static-analysis.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	gpm-devel
 BuildRequires:	krb5-devel
