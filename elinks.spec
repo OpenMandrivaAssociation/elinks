@@ -1,57 +1,46 @@
-%define pre pre6
-%define _disable_lto 1
-
 Summary:	Lynx-like text WWW browser
 Name:		elinks
-Version:	0.12
-Release:	0.%{pre}.9
+Version:	0.19.1
+Release:	1
 License:	GPLv2+
 Group:		Networking/WWW
-Url:		https://elinks.or.cz/
-Source0:	http://elinks.or.cz/download/%{name}-%{version}%{pre}.tar.bz2
+Url:		https://github.com/rkd77/elinks
+Source0:	https://github.com/rkd77/elinks/releases/download/v%{version}/elinks-%{version}.tar.xz
 Source1:	elinks.conf
 
-# stella6.4/centos patches thx to Nux
-Patch0:		elinks-0.11.0-ssl-noegd.patch
 Patch1:		elinks-0.10.1-utf_8_io-default.patch
 Patch2:		http://data.gpo.zugaina.org/gentoo/www-client/elinks/files/elinks-0.11.5-makefile.patch
 Patch3:		elinks-0.11.0-getaddrinfo.patch
-Patch4:		elinks-0.11.0-sysname.patch
 Patch5:		elinks-0.10.1-xterm.patch
-Patch7:		elinks-0.11.3-macropen.patch
-Patch8:		elinks-scroll.patch
-Patch12:	elinks-0.12pre5-ddg-search.patch
-Patch13:	elinks-0.12pre6-autoconf.patch
-Patch14:	elinks-0.12pre6-ssl-hostname.patch
 Patch15:	elinks-0.12pre6-list_is_singleton.patch
-Patch16:	elinks-0.12pre6-lua51.patch
-# add support for GNU Libidn2, patch by Robert Scheck (#1098789)
-Patch17:	elinks-0.12pre6-libidn2.patch
 
-# make configure.ac recognize recent versions of GCC
-Patch18:	elinks-0.12pre6-recent-gcc-versions.patch
-
-# fix compatibility with OpenSSL 1.1 (#1423519) and ...
-# drop disablement of TLS1.0 on second attempt to connect
-Patch19:	elinks-0.12pre6-openssl11.patch
-
-# fix programming mistakes detected by static analysis
-Patch20:	elinks-0.12pre6-static-analysis.patch
-
-BuildRequires:	autoconf
-BuildRequires:	automake
-BuildRequires:	libtool-base
-BuildRequires:	slibtool
-BuildRequires:	make
+BuildRequires:	meson
+BuildSystem:	meson
+BuildOption:	-D256-colors=true
+BuildOption:	-D88-colors=true
+BuildOption:	-Dtrue-color=true
+BuildOption:	-Dbrotli=true
+BuildOption:	-Dbzlib=true
+BuildOption:	-Dcgi=true
+BuildOption:	-Ddocdir=%{_docdir}/%{name}
+BuildOption:	-Dgssapi=true
+BuildOption:	-Dlibavif=false
+BuildOption:	-Dlzma=true
+BuildOption:	-Dzstd=true
+BuildOption:	-Dlibcss=false
 BuildRequires:	pkgconfig(bzip2)
+BuildRequires:	pkgconfig(libbrotlidec)
+BuildRequires:	pkgconfig(tre)
 BuildRequires:	gpm-devel
 BuildRequires:	krb5-devel
 BuildRequires:	lua-devel
 BuildRequires:	pkgconfig(expat)
+BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libidn2)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
+BuildRequires:	pkgconfig(libzstd)
 Provides:	webclient
 Provides:	links
 Requires(post,preun,postun):	rpm-helper
@@ -67,83 +56,15 @@ customizable and can be extended via scripts. Its features include:
 - can download files in background
 - HTTP authentication
 
-%files -f elinks.lang
+%files -f %{name}.lang
 %{_bindir}/elinks
-%doc README SITES TODO COPYING
-%ghost %verify(not md5 size mtime) %{_bindir}/links
-%ghost %verify(not md5 size mtime) %{_mandir}/man1/links*
+%doc %{_docdir}/%{name}
 %config(noreplace) %{_sysconfdir}/elinks.conf
 %{_mandir}/man1/elinks.1*
 %{_mandir}/man5/*
 
-%postun
-if [ "$1" -ge "1" ]; then
-    links=`readlink %{_sysconfdir}/alternatives/links`
-    if [ "$links" == "%{_bindir}/elinks" ]; then
-	%{_sbindir}/alternatives --set links %{_bindir}/elinks
-    fi
-fi
-exit 0
-
-%post
-#Set up alternatives files for links
-%{_sbindir}/alternatives --install %{_bindir}/links links %{_bindir}/elinks 90 \
-  --slave %{_mandir}/man1/links.1.gz links-man %{_mandir}/man1/elinks.1.gz
-links=`readlink %{_sysconfdir}/alternatives/links`
-if [ "$links" == "%{_bindir}/elinks" ]; then
-	%{_sbindir}/alternatives --set links %{_bindir}/elinks
-fi
-
-%preun
-if [ $1 = 0 ]; then
-	%{_sbindir}/alternatives --remove links %{_bindir}/elinks
-fi
-exit 0
-
-#----------------------------------------------------------------------------
-
-%prep
-%autosetup -n %{name}-%{version}%{pre} -p1
-
-# rename the input file of autoconf to eliminate a warning
-mv -v configure.in configure.ac
-sed -e 's/configure\.in/configure.ac/' \
-    -i Makefile* acinclude.m4 doc/man/man1/Makefile
-
-# remove bogus serial numbers
-sed -i 's/^# *serial [AM0-9]*$//' acinclude.m4 config/m4/*.m4
-
-# recreate autotools files
-aclocal -I config/m4
-autoconf
-autoheader
-
-%build
-export CFLAGS="%{optflags} $(getconf LFS_CFLAGS) -D_GNU_SOURCE"
-%configure \
-	%{?rescue:--without-gpm} \
-	--without-x \
-	--with-gssapi \
-	--enable-bittorrent \
-	--without-nss_compat_ossl \
-	--enable-256-colors \
-	--with-openssl \
-	--without-gnutls \
-	--with-lua
-
-MOPTS="V=1"
-if tty >/dev/null 2>&1; then
-    # turn on fancy colorized output only when we have a TTY device
-    MOPTS=
-fi
-%make_build $MOPTS
-
-%install
-%make_install
-rm -f %{buildroot}%{_datadir}/locale/locale.alias
+%install -a
 mkdir -p %{buildroot}%{_sysconfdir}
 install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/elinks.conf
-touch %{buildroot}%{_bindir}/links
-true | gzip -c > %{buildroot}%{_mandir}/man1/links.1.gz
 
-%find_lang elinks
+%find_lang %{name} --all-name --with-man

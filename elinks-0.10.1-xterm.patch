@@ -1,18 +1,15 @@
- src/config/options.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/src/config/options.c b/src/config/options.c
-index 925e042..ace1a13 100644
---- a/src/config/options.c
-+++ b/src/config/options.c
-@@ -706,8 +706,9 @@ register_autocreated_options(void)
- 	get_opt_bool("terminal.linux.m11_hack") = 1;
- 	get_opt_int("terminal.vt100.type") = TERM_VT100;
- 	get_opt_int("terminal.vt110.type") = TERM_VT100;
--	get_opt_int("terminal.xterm.type") = TERM_VT100;
-+	get_opt_int("terminal.xterm.type") = 2;
- 	get_opt_bool("terminal.xterm.underline") = 1;
-+	get_opt_int("terminal.xterm.colors") = 1;
- 	get_opt_int("terminal.xterm-color.type") = TERM_VT100;
- 	get_opt_int("terminal.xterm-color.colors") = COLOR_MODE_16;
- 	get_opt_bool("terminal.xterm-color.underline") = 1;
+diff -up elinks-0.19.1/src/config/options.c.4~ elinks-0.19.1/src/config/options.c
+--- elinks-0.19.1/src/config/options.c.4~	2026-02-07 08:23:38.000000000 +0100
++++ elinks-0.19.1/src/config/options.c	2026-02-07 17:43:09.708090112 +0100
+@@ -802,9 +802,10 @@ register_autocreated_options(void)
+ 	get_opt_bool("terminal.linux.m11_hack", NULL) = 1;
+ 	get_opt_int("terminal.vt100.type", NULL) = TERM_VT100;
+ 	get_opt_int("terminal.vt110.type", NULL) = TERM_VT100;
+-	get_opt_int("terminal.xterm.type", NULL) = TERM_VT100;
++	get_opt_int("terminal.xterm.type", NULL) = 2;
+ 	get_opt_bool("terminal.xterm.underline", NULL) = 1;
+ 	get_opt_bool("terminal.xterm.strike", NULL) = 1;
++	get_opt_int("terminal.xterm.colors", NULL) = 1;
+ 	get_opt_int("terminal.xterm-color.type", NULL) = TERM_VT100;
+ 	get_opt_int("terminal.xterm-color.colors", NULL) = COLOR_MODE_16;
+ 	get_opt_bool("terminal.xterm-color.underline", NULL) = 1;

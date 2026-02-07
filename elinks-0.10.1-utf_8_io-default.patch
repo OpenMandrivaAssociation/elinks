@@ -1,12 +1,12 @@
-diff -urNp elinks-0.12pre3-orig/src/config/options.inc elinks-0.12pre3/src/config/options.inc
---- elinks-0.12pre3-orig/src/config/options.inc
-+++ elinks-0.12pre3/src/config/options.inc
-@@ -920,7 +920,7 @@ static struct option_info config_options
+diff -up elinks-0.19.1/src/config/options.inc.1~ elinks-0.19.1/src/config/options.inc
+--- elinks-0.19.1/src/config/options.inc.1~	2026-02-07 08:23:38.000000000 +0100
++++ elinks-0.19.1/src/config/options.inc	2026-02-07 17:41:31.290970739 +0100
+@@ -1121,7 +1121,7 @@ static union option_info config_options_
  	 * not defined, it should not be possible to set UTF-8 as "codepage";
  	 * please report any such possibilities as bugs.)  */
  	INIT_OPT_BOOL("terminal._template_", N_("UTF-8 I/O"),
--		"utf_8_io", 0, 0,
-+		"utf_8_io", 0, 1,
+-		"utf_8_io", OPT_ZERO, 0,
++		"utf_8_io", OPT_ZERO, 1,
  		N_("Enable I/O in UTF-8 for Unicode terminals. "
  		"Note that currently, only the subset of UTF-8 according to "
  		"terminal codepage is used. ELinks ignores this option "
