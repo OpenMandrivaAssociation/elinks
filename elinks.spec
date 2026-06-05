@@ -1,7 +1,7 @@
 Summary:	Lynx-like text WWW browser
 Name:		elinks
 Version:	0.19.1
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Networking/WWW
 Url:		https://github.com/rkd77/elinks
