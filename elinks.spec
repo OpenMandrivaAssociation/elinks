@@ -1,15 +1,15 @@
 Summary:	Lynx-like text WWW browser
 Name:		elinks
-Version:	0.19.1
-Release:	2
+Version:	0.20.0
+Release:	1
 License:	GPLv2+
 Group:		Networking/WWW
 Url:		https://github.com/rkd77/elinks
 Source0:	https://github.com/rkd77/elinks/releases/download/v%{version}/elinks-%{version}.tar.xz
 Source1:	elinks.conf
 
-Patch1:		elinks-0.10.1-utf_8_io-default.patch
-Patch2:		http://data.gpo.zugaina.org/gentoo/www-client/elinks/files/elinks-0.11.5-makefile.patch
+# dropped (no longer applies): Patch1:		elinks-0.10.1-utf_8_io-default.patch
+# dropped (no longer applies): Patch2:		http://data.gpo.zugaina.org/gentoo/www-client/elinks/files/elinks-0.11.5-makefile.patch
 Patch3:		elinks-0.11.0-getaddrinfo.patch
 Patch5:		elinks-0.10.1-xterm.patch
 Patch15:	elinks-0.12pre6-list_is_singleton.patch
